@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useReducer} from 'react';
+import axios from 'axios';
+import {Cards, Chart, CountryPicker} from './components';
+import {fetchDataSuccess, fetchDataFailure, dataReducer} from './api';
 import './App.css';
 
-function App() {
+const url = 'https://covid19.mathdro.id/api';
+
+const App = () => {
+  const initialState = {
+    data: {},
+    loading: true,
+    error: '',
+  };
+
+  const [state, dispatch] = useReducer(dataReducer, initialState);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(url);
+        dispatch(fetchDataSuccess(res));
+        return res;
+      } catch (err) {
+        dispatch(fetchDataFailure(err));
+      }
+    };
+    fetchData();
+  }, []);
+  console.log(state);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Cards />
+      <Chart />
+      <CountryPicker />
     </div>
   );
-}
+};
 
 export default App;
