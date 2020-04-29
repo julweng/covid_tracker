@@ -3,7 +3,7 @@ const fetchDataRequest = () => ({
   type: 'FETCH_DATA_REQUEST',
 });
 
-const fetchDataSuccess = (res) => {
+const fetchDataSuccess = res => {
   const {confirmed, recovered, deaths, lastUpdate} = res.data;
   return {
     type: 'FETCH_DATA_SUCCESS',
@@ -16,7 +16,7 @@ const fetchDataSuccess = (res) => {
   };
 };
 
-const fetchDataFailure = (err) => ({
+const fetchDataFailure = err => ({
   type: 'FETCH_DATA_FAILURE',
   error: err.message,
 });
