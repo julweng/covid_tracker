@@ -10,7 +10,11 @@ const fetchDailyDataRequest = () => ({
 const fetchDailyDataSuccess = (res) => {
   return {
     type: 'FETCH_DAILY_DATA_SUCCESS',
-    data: res.data,
+    data: res.data.map(({ confirmed, deaths, reportDate }) => ({
+      confirmed: confirmed.total,
+      deaths: deaths.total,
+      date: reportDate
+    }))
   };
 };
 
