@@ -1,1 +1,5 @@
-export { fetchDataRequest, fetchDataSuccess, fetchDataFailure, dataReducer } from "./fetchData"
+export {
+  fetchData,
+  dataReducer,
+} from './fetchData';
+

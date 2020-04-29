@@ -1,3 +1,7 @@
+import axios from 'axios';
+
+const url = 'https://covid19.mathdro.id/api';
+
 // action
 const fetchDataRequest = () => ({
   type: 'FETCH_DATA_REQUEST',
@@ -20,6 +24,17 @@ const fetchDataFailure = err => ({
   type: 'FETCH_DATA_FAILURE',
   error: err.message,
 });
+
+const fetchData = async (dispatch) => {
+  dispatch(fetchDataRequest());
+  try {
+    const res = await axios.get(url);
+    dispatch(fetchDataSuccess(res));
+    return res;
+  } catch (err) {
+    dispatch(fetchDataFailure(err));
+  }
+}
 
 // reducer
 const dataReducer = (state, action) => {
@@ -47,4 +62,4 @@ const dataReducer = (state, action) => {
   }
 };
 
-export {fetchDataRequest, fetchDataSuccess, fetchDataFailure, dataReducer};
+export {fetchData, dataReducer};

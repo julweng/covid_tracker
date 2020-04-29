@@ -1,15 +1,7 @@
 import React, {useEffect, useReducer} from 'react';
-import axios from 'axios';
 import {Cards, Chart, CountryPicker} from './components';
-import {
-  fetchDataRequest,
-  fetchDataSuccess,
-  fetchDataFailure,
-  dataReducer,
-} from './api';
+import {fetchData, dataReducer} from './api';
 import './App.css';
-
-const url = 'https://covid19.mathdro.id/api';
 
 const App = () => {
   const initialState = {
@@ -21,17 +13,10 @@ const App = () => {
   const [state, dispatch] = useReducer(dataReducer, initialState);
 
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch(fetchDataRequest());
-      try {
-        const res = await axios.get(url);
-        dispatch(fetchDataSuccess(res));
-        return res;
-      } catch (err) {
-        dispatch(fetchDataFailure(err));
-      }
+    const fetchAPI = async () => {
+      await fetchData(dispatch);
     };
-    fetchData();
+    fetchAPI();
   }, []);
 
   return (
