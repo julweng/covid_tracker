@@ -1,7 +1,12 @@
 import React, {useEffect, useReducer} from 'react';
 import axios from 'axios';
 import {Cards, Chart, CountryPicker} from './components';
-import {fetchDataSuccess, fetchDataFailure, dataReducer} from './api';
+import {
+  fetchDataRequest,
+  fetchDataSuccess,
+  fetchDataFailure,
+  dataReducer,
+} from './api';
 import './App.css';
 
 const url = 'https://covid19.mathdro.id/api';
@@ -9,6 +14,7 @@ const url = 'https://covid19.mathdro.id/api';
 const App = () => {
   const initialState = {
     data: {},
+    loading: false,
     error: '',
   };
 
@@ -16,6 +22,7 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      dispatch(fetchDataRequest());
       try {
         const res = await axios.get(url);
         dispatch(fetchDataSuccess(res));
@@ -27,12 +34,17 @@ const App = () => {
     fetchData();
   }, []);
 
-  console.log(state);
   return (
     <div className="container">
-      <Cards data={state.data} />
-      <Chart />
-      <CountryPicker />
+      {state.loading || JSON.stringify(state.data) === '{}' ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <Cards data={state.data} />
+          <Chart />
+          <CountryPicker />
+        </>
+      )}
     </div>
   );
 };
