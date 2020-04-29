@@ -9,7 +9,6 @@ const url = 'https://covid19.mathdro.id/api';
 const App = () => {
   const initialState = {
     data: {},
-    loading: true,
     error: '',
   };
 
@@ -27,10 +26,11 @@ const App = () => {
     };
     fetchData();
   }, []);
+
   console.log(state);
   return (
     <div className="container">
-      <Cards />
+      <Cards data={state.data} />
       <Chart />
       <CountryPicker />
     </div>
