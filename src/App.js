@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {Cards, Chart, CountryPicker} from './components';
 import {fetchData, dataReducer} from './api';
+import coronaImage from './image/image.png'
 import './App.css';
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
         <p>Loading...</p>
       ) : (
         <>
+          <img className="corona-img" src={coronaImage} alt="COVID-19" />
           <Cards data={state.data} />
           <CountryPicker
             handleCountryChange={setCountry}
