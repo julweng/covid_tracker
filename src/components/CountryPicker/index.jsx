@@ -17,12 +17,10 @@ const CountryPicker = ({handleCountryChange, selectedCountry}) => {
     fetchAPI();
   }, []);
 
-  const placeholder = selectedCountry ? selectedCountry : "Global"
-
   return (
     <FormControl className="formControl">
-      <NativeSelect defaultValue="" onChange={e => handleCountryChange(e.target.value)}>
-        <option value={placeholder}>{placeholder}</option>
+      <NativeSelect value={selectedCountry} onChange={e => handleCountryChange(e.target.value)}>
+        <option value="">GLOBAL</option>
         {state.countries.map((country) => (
           <option key={`${country.name}-${country.iso3}`} value={country.name}>
             {country.name}
