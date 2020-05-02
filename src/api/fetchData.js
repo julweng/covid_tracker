@@ -25,10 +25,16 @@ const fetchDataFailure = err => ({
   error: err.message,
 });
 
-const fetchData = async (dispatch) => {
+const fetchData = async (dispatch, country) => {
+  let changeableUrl = url;
+
+  if(country) {
+    changeableUrl = `${url}/countries/${country}`
+  }
+
   dispatch(fetchDataRequest());
   try {
-    const res = await axios.get(url);
+    const res = await axios.get(changeableUrl);
     dispatch(fetchDataSuccess(res));
     return res;
   } catch (err) {

@@ -6,7 +6,7 @@ import './Cards.css';
 
 const Cards = ({data: {confirmed, recovered, deaths, lastUpdate}}) => {
   return (
-    <div className={StyleSheet.container}>
+    <div className="card-container">
       <Grid container spacing={3} justify="center">
         <Grid
           item

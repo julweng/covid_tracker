@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer} from 'react';
+import React, {useState, useEffect, useReducer} from 'react';
 import {Cards, Chart, CountryPicker} from './components';
 import {fetchData, dataReducer} from './api';
 import './App.css';
@@ -10,14 +10,16 @@ const App = () => {
     error: '',
   };
 
+  const [country, setCountry] = useState("")
+
   const [state, dispatch] = useReducer(dataReducer, initialState);
 
   useEffect(() => {
     const fetchAPI = async () => {
-      await fetchData(dispatch);
+      await fetchData(dispatch, country)
     };
     fetchAPI();
-  }, []);
+  }, [country]);
 
   return (
     <div className="container">
@@ -26,8 +28,8 @@ const App = () => {
       ) : (
         <>
           <Cards data={state.data} />
+          <CountryPicker handleCountryChange={setCountry} selectedCountry={country} />
           <Chart />
-          <CountryPicker />
         </>
       )}
     </div>
