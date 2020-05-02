@@ -10,13 +10,13 @@ const App = () => {
     error: '',
   };
 
-  const [country, setCountry] = useState("")
+  const [country, setCountry] = useState('');
 
   const [state, dispatch] = useReducer(dataReducer, initialState);
 
   useEffect(() => {
     const fetchAPI = async () => {
-      await fetchData(dispatch, country)
+      await fetchData(dispatch, country);
     };
     fetchAPI();
   }, [country]);
@@ -28,8 +28,11 @@ const App = () => {
       ) : (
         <>
           <Cards data={state.data} />
-          <CountryPicker handleCountryChange={setCountry} selectedCountry={country} />
-          <Chart />
+          <CountryPicker
+            handleCountryChange={setCountry}
+            selectedCountry={country}
+          />
+          <Chart selectedCountry={country} selectedDailyData={state.data} />
         </>
       )}
     </div>
